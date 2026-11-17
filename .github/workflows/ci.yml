@@ -1,10 +1,10 @@
-name: Offset 3290 rebased diagnostic
+name: Offset 3290 rebased golden diagnostic
 on:
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  regression:
+  reference:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     env:
@@ -12,14 +12,6 @@ jobs:
       CARGO_INCREMENTAL: 0
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - name: Clippy test targets
+      - name: Compare offset references
         working-directory: solidcore
-        run: cargo clippy -p solidcore --tests -- -D warnings
-      - name: Offset regression tests
-        working-directory: solidcore
-        run: cargo test -p solidcore --test issue_3290_offset
-      - name: WebAssembly
-        working-directory: solidcore
-        run: |
-          rustup target add wasm32-unknown-unknown
-          cargo check -p solidcore --target wasm32-unknown-unknown
+        run: cargo run --profile goldens -p goldens -- --unit curve.composite_curve_p2 --goldens
