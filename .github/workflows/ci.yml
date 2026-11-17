@@ -14,4 +14,4 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Check Linux offset reference
         working-directory: solidcore
-        run: cargo run --profile goldens -p goldens -- --unit curve.composite_curve_p2 --filter gen0288 --goldens
+        run: cargo run --profile goldens -p goldens -- --unit curve.composite_curve_p2 --goldens
